@@ -16,12 +16,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VeiculoController;
 
 Route::get('/', [VeiculoController::class, 'index'])->middleware('auth');
-Route::get('/dashboard', [VeiculoController::class, 'index']);
-Route::get('/veiculo/create', [VeiculoController::class, 'createView']);
-Route::get('/veiculo', [VeiculoController::class, 'show']);
-Route::get('/veiculo/edit/{id}', [VeiculoController::class, 'edit']);
-Route::get('/layout', [VeiculoController::class, 'layout']);
+Route::get('/dashboard', [VeiculoController::class, 'index'])->middleware('auth');
+Route::get('/layout', [VeiculoController::class, 'layout'])->middleware('auth');
 
+// Views Veiculos
+Route::get('/veiculo/create', [VeiculoController::class, 'createView'])->middleware('auth');
+Route::get('/veiculo', [VeiculoController::class, 'show'])->middleware('auth');
+Route::get('/veiculo/edit/{id}', [VeiculoController::class, 'edit'])->middleware('auth');
 
 Route::delete('/veiculo/{id}', [VeiculoController::class, 'destroy']);
 Route::post('/veiculo', [VeiculoController::class, 'store']);

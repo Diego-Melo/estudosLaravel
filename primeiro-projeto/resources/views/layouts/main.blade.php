@@ -41,6 +41,10 @@
                     <a class="nav-link" href="#">Empresas</a>
                     <a class="nav-link" href="#">Clientes</a>
                     <a class="nav-link" href="/veiculo">Veiculos</a>
+                    <form action="/logout" method="POST">
+                        @csrf
+                        <button type="submit" class="nav-link btn" >Sair</button>
+                    </form>
                 </nav>
             </div>
         </div>
