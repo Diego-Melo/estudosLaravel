@@ -5,8 +5,22 @@
     <div class="container-fluid">
 
         <div class="container p-5">
+            <div class="container-fluid d-flex justify-content-end align-items-center">
+                
+                    <a href="veiculo/create" class="btn btn-primary btn-sm d-flex justify-content-center align-items-center" >
+                        <span class="material-icons fs-2" style="color: #ffffff">add</span>
+                        Adicionar Veículo
+                    </a>
+            </div>
             <div class="row">
+@if($search)
+                <h1>Buscando por: {{$search}}</h1>
+                @if(count($veiculos)==0)
+                <h5>Nenhum resultado encontrado para busca.</h5>
+                <a href="/veiculo">Clique aqui para voltar.</a>
 
+@endif
+@endif
                 @foreach ($veiculos as $veiculo)
                 <div class="col-lg-6 col-sm-12">
                     <div class="card p-2 mb-1">
@@ -39,14 +53,30 @@
                                 <div class="d-flex justify-content-center align-items-end flex-column">
                                     <span style="color: grey; font-size: 0.7em">Data de Criação</span>
                                     {{ $veiculo->created_at->format('d/m/Y') }}
+                                    <div class="d-flex">
+
+
+                                        <a href="/veiculo/edit/{{$veiculo->id}}" class="p-1" style="background: none; border:none">
+                                            <span class="material-icons" style="color: #2196f3">edit</span>
+                                        </a>
+
                                     <form action="/veiculo/{{$veiculo->id}}" method='post'>
                                         @csrf
                                         @method('DELETE')
-                                        <button class="btn"></button>
+                                        <button type="submit" class="p-1" style="background: none; border:none">
+                                            <span class="material-icons" style="color: #f55">delete</span>
+                                        </button>
                                     </form>
                                 </div>
+                                </div>
                             </div>
-                        </div>  
+                        </div> 
+                        <br>
+                        @if($veiculo->status=="ativo")
+  <div class="card-footer bg-transparent border-success" ></div>
+  @else 
+  <div class="card-footer bg-transparent border-danger" ></div>
+  @endif
                     </div>
                     </div>
                 @endforeach

@@ -16,15 +16,35 @@ class VeiculoController extends Controller
         return view('veiculo.create');
     }
 
-    public function edit(){
+    public function edit($id){
+        $veiculo = Veiculos::findOrFail($id);
+        return view('veiculo.create',['veiculo'=>$veiculo]);
     }
 
     public function show(){
-        $veiculos = Veiculos::all();
-        return view('veiculo.list',['veiculos'=>$veiculos]);
+        $search = request('search');
+        if($search){
+            $veiculo = Veiculos::where([
+                ['nome_cliente', 'like','%'.$search.'%']
+            ]
+            )->get();
+        }else{
+            $veiculo = Veiculos::all();
+        }
+        return view('veiculo.list',['veiculos'=>$veiculo,'search'=>$search]);
     }
 
-    public function delete(){
+    public function update(Request $request){
+        $data = $request->all();
+        $data['status'] = isset($data['status']) ? 'ativo' : 'inativo';
+        Veiculos::findOrFail($request->id)->update($data);
+        return redirect('veiculo')->with('msg','Veículo editado com sucesso!');
+    }
+    
+    public function destroy($id){
+        Veiculos::destroy($id);
+        return redirect('veiculo')->with('msg','Veículo excluido com sucesso!');
+
     }
 
     public function store(Request $request){
@@ -41,5 +61,9 @@ class VeiculoController extends Controller
         $veiculos->status = $status == 'on' ? 'ativo' : 'inativo';
         $veiculos->save();
         return redirect('veiculo')->with('msg','Veículo adicionado com sucesso!');
+    }
+
+    public function layout() {
+        return view('layouts.main');
     }
 }

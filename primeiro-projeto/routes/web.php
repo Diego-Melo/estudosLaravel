@@ -16,25 +16,15 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VeiculoController;
 
 Route::get('/', [VeiculoController::class, 'index']);
-
 Route::get('/veiculo/create', [VeiculoController::class, 'createView']);
-Route::post('/veiculo', [VeiculoController::class, 'store']);
-Route::put('/veiculo', [VeiculoController::class, 'edit']);
-Route::delete('/veiculo', [VeiculoController::class, 'delete']);
 Route::get('/veiculo', [VeiculoController::class, 'show']);
+Route::get('/veiculo/edit/{id}', [VeiculoController::class, 'edit']);
+Route::get('/layout', [VeiculoController::class, 'layout']);
 
-Route::get('/teste/{nome?}', function ($nome = "Diego") {
-    return view('teste',['nome' => $nome]);
-});
 
-Route::get('/busca', function () {
-    $busca = request('busca');
-    return view('busca',['busca' => $busca]);
-});
-
-Route::get('/layout', function () {
-    return view('layouts.main');
-});
+Route::delete('/veiculo/{id}', [VeiculoController::class, 'destroy']);
+Route::post('/veiculo', [VeiculoController::class, 'store']);
+Route::put('/veiculo/update', [VeiculoController::class, 'update']);
 
 
 // Route::get('/', function () {
