@@ -9,7 +9,7 @@ use App\Models\Veiculos;
 class VeiculoController extends Controller
 {
     public function index(){
-        return view('welcome');
+        return view('home');
     }
 
     public function createView(){
@@ -57,8 +57,8 @@ class VeiculoController extends Controller
         $veiculos->modelo = $request->modelo;
         $veiculos->cor = $request->cor;
         $veiculos->marca = $request->marca;
-        $status = $request->status;
-        $veiculos->status = $status == 'on' ? 'ativo' : 'inativo';
+        $status = isset($request->status) ? 'ativo' : 'inativo';
+        $veiculos->status = $status;
         $veiculos->save();
         return redirect('veiculo')->with('msg','Veículo adicionado com sucesso!');
     }

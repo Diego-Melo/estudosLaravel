@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\VeiculoController;
 
-Route::get('/', [VeiculoController::class, 'index']);
+Route::get('/', [VeiculoController::class, 'index'])->middleware('auth');
+Route::get('/dashboard', [VeiculoController::class, 'index']);
 Route::get('/veiculo/create', [VeiculoController::class, 'createView']);
 Route::get('/veiculo', [VeiculoController::class, 'show']);
 Route::get('/veiculo/edit/{id}', [VeiculoController::class, 'edit']);
@@ -31,3 +32,7 @@ Route::put('/veiculo/update', [VeiculoController::class, 'update']);
 //     $nome = 'Maisa';
 //     return view('welcome', ['nome'=>$nome]);
 // });
+
+Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
